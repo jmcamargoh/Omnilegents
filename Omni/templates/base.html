@@ -1,0 +1,47 @@
+<!-- Base que debe ir en todos los views (header, footer...) -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <div id="titulo">
+
+        {% block titulo %}
+        {% endblock %}
+
+    </div>
+    
+
+    {% load static %}
+
+</head>
+<body>
+    <header id="header">
+
+        <div class="contenedor_logo">
+            <img class="logo" src="{% static 'app/img/loguito.png' %}" alt="logo">      <!-- Ya si dio, pero hay que reorganizar el tamaño -->
+        </div>
+
+        <div>
+            <nav id="head_navi">
+                <ul>
+                    <li>
+                        <a href="{% url 'home' %}">Menú Principal</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </header>
+    
+    <div id="contenido">
+
+        {% block contenido %}   <!-- Bloque en el que se ingresará cada una de las view (sobreescritura) -->
+        {% endblock %}
+
+    </div>
+</body>
+</html>
