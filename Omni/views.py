@@ -12,4 +12,7 @@ def libros(request):
 def login(request):
     return render (request, 'login.html') #página del login
 
+def mislibros(request):
+    return render (request, 'mislibros.html') #página de mis libros
+
 #Pendiente: Login, se trabajará mas adelante
