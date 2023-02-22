@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+    <title>Omnilegents Libros</title>
+
+{% endblock %}
+
+{% block contenido %}
+
+    <h1>Libros</h1>
+
+    <p>
+        Sección donde encontrarás tus libros por nombre o por su código ISBN
+    </p>
+
+    <div class="buscador">
+        <input type="text" name="bookfinder"/>      <!-- Barra para la búsqueda de libros -->
+        <button type="button" class="btn btn-primary">Buscar</button>
+    </div>
+
+{% endblock %}
