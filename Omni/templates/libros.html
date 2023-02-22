@@ -6,6 +6,16 @@
 
 {% endblock %}
 
+{% block header %}
+    <nav id="head_navi">
+        <ul>
+            <li>
+                <a href="{% url 'home' %}">Menú Principal</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
+
 {% block contenido %}
 
     <h1>Libros</h1>
