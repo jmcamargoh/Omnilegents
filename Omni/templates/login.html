@@ -1,12 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omnilegents</title>
-</head>
-<body>
-    <h1>Página del Login</h1>
-</body>
-</html>
+
+{% block titulo %}
+
+    <title>Omnilegents Login</title>
+
+{% endblock %}
+
+
+{% block contenido %}
+
+    <h1>Inicio de sesión</h1>
+
+    <p>
+        Ingresa tu usuario y tu contraseña:
+    </p>
+
+    <div class="inicio_sesion">
+        <p>Usuario: <input type="text" name="user"/></p>
+        <p>Contraseña: <input type="text" name="password"/></p>
+
+        <button type="button" class="btn btn-primary">Ingresar</button>
+    </div>
+
+{% endblock %}
