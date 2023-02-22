@@ -1,2 +1,23 @@
-<h1>Bienvenidos a la página de inicio</h1>
-<h2>Esta es la página completa del home, hola soy el Chema</h2>
+<!-- Hereda desde base lo que tiene que ir en todas las views -->
+
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+    <title>Omnilegents Menú Principal</title>
+
+{% endblock %}
+
+{% block contenido %}
+
+    <h1>Omnilegents</h1>
+
+    <nav id="home_navi">
+        <li>
+            <a href="{% url 'libros' %}">Libros</a>
+        </li>
+    </nav>
+
+    <!--<button type="button" class="btn btn-outline-primary">Libros</button>-->
+
+{% endblock %}
