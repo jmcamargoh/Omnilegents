@@ -10,6 +10,7 @@ class Usuario(models.Model):
     domicilio=models.CharField(max_length=50)
     fecha_nacimiento=models.DateField()
 
-    #def __str__(self):
-        #return self.id_Usuario
+    def __str__(self):
+        texto = "{0} ({1})"
+        return texto.format(self.nombre_usuario, self.id_Usuario)
 
