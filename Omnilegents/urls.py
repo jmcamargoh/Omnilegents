@@ -23,4 +23,5 @@ urlpatterns = [
     path('home/', OmniViews.home, name="home"),
     path("libros/", OmniViews.libros, name="libros"), #Para acceder a esta es el mismo enlace con /libros
     path("mislibros/", OmniViews.mislibros, name='mislibros'),
+    path('registro/', OmniViews.registro, name="registro"),
 ]

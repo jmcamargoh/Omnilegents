@@ -15,4 +15,7 @@ def login(request):
 def mislibros(request):
     return render (request, 'mislibros.html') #página de mis libros
 
+def registro(request):
+    return render (request, 'registro.html') #página de registro
+
 #Pendiente: Login, se trabajará mas adelante
