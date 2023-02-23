@@ -29,6 +29,6 @@ def registrarUsuario(request):
 
     usuario=Usuario.objects.create(id_Usuario=id_Usuario, nombre_usuario=nombre_usuario, correo=correo, password=password, domicilio=domicilio, fecha_nacimiento=fecha_nacimiento)
 
-    return redirect ('home/')
+    return redirect ('/')
 
 #Pendiente: Login, se trabajará mas adelante
