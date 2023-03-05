@@ -25,4 +25,5 @@ urlpatterns = [
     path("mislibros/", OmniViews.mislibros, name='mislibros'),
     path('registro/', OmniViews.registro, name="registro"),
     path('registrarUsuario/', OmniViews.registrarUsuario),
+    path("import/", OmniViews.import_csv)
 ]

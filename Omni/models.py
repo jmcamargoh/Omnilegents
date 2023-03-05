@@ -13,4 +13,16 @@ class Usuario(models.Model):
     def __str__(self):
         texto = "{0} ({1})"
         return texto.format(self.nombre_usuario, self.id_Usuario)
+    
 
+class Libro(models.Model):
+    isbn13=models.IntegerField(primary_key= True)
+    titulo=models.CharField(max_length= 120)
+    autores=models.CharField(max_length= 250)
+    num_pages=models.IntegerField()
+    fecha_publicacion=models.DateField()
+    editorial=models.CharField(max_length=50)
+
+    def __str__(self):
+        texto = "{1} ({0})"
+        return texto.format(self.titulo, self.isbn13)
