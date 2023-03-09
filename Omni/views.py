@@ -34,23 +34,22 @@ def registrarUsuario(request):
 
 
 def import_csv(request): #hay errores en los que no sabemos por que no manda
-    books = []
-    with open ("books1.csv", "r") as csv_file:
-        data = list(csv.reader(csv_file, delimiter=","))
-        for row in data [1:]:
-            books.append(
-                Libro(
-                    isbn13=row[5],
-                    titulo=row[1],
-                    autores=row[2],
-                    num_pages=[7],
-                    fecha_publicacion=[10],
-                    editorial=[11]
-                )
+    if request.method == 'POST':
+        csv_file = request.FILES['csv_file']
+        csv_data = csv.reader(csv_file.read().decode('utf-8').splitlines())
+        for row in csv_data:
+            _, created = Libro.objects.get_or_create(
+                isbn13=row[5],
+                titulo=row[1],
+                autores=row[2],
+                num_pages=row[7],
+                fecha_publicacion=row[10],
+                editorial=row[11]
             )
-    if len(books) > 0:
-        Libro.objects.create(books)
+        return render (request, 'import_csv.html', {'success':True})
+    else:
+        return render (request, 'import_csv.html')
     
-    return HttpResponse("Esta guevonada importó")
+    #return HttpResponse("Esta guevonada importó")
 
 #Pendiente: Login, se trabajará mas adelante

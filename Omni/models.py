@@ -16,7 +16,7 @@ class Usuario(models.Model):
     
 
 class Libro(models.Model):
-    isbn13=models.IntegerField(primary_key= True)
+    isbn13=models.CharField(max_length= 15,primary_key= True)
     titulo=models.CharField(max_length= 120)
     autores=models.CharField(max_length= 250)
     num_pages=models.IntegerField()
