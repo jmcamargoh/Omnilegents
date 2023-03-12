@@ -1,5 +1,5 @@
-## Omnilegents
+# Omnilegents
 
-#Libraries
+### Libraries
 
-#Commands
+### Commands
