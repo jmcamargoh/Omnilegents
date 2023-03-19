@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+    <h1>Import CSV</h1>
+    {% if success %}
+        <p>Data imported successfully!</p>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for = "csvName">Nombre CSV a migrar</label>
+        <input id = "csvName" type="text" name="csvName" placeholder="ejemplo.csv"/>
+
+        <button type="submit">Import</button>
+    </form>
+{% endblock %}

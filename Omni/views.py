@@ -2,6 +2,52 @@ import csv
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Usuario, Libro
+import pandas as pd
+
+
+
+#---------------------------------------
+ 
+class LibroSTR:
+  def __init__(self, bookID,title, author, isbn, num_page, publication_date, publisher):
+    self.bookID = bookID
+    self.title = title
+    self.author = author
+    self.isbn = isbn
+    self.num_page = num_page
+    self.publication_date = publication_date
+    self.publisher = publisher
+
+  def getID(self):
+     return self.bookID
+  
+  def getTitle(self):
+    return self.title
+
+  def getAuthor(self):
+    return self.author
+
+  def getIsbn(self):
+    return self.isbn
+
+  def getNumPage(self):
+    return self.num_page
+  
+  def getPublicationDate(self):
+    return self.publication_date
+   
+  def getPublisher(self):
+     return self.publisher
+
+def registradorLibros(dataframe):
+  listaLibros = []
+  for a in range(1,len(dataframe[0])):
+    listaLibros.append(LibroSTR(str(dataframe[0][a]).strip(),str(dataframe[1][a]).strip(),str(dataframe[2][a]).strip(),str(dataframe[3][a]).strip(),str(dataframe[4][a]).strip(),str(dataframe[5][a]).strip(),str(dataframe[6][a]).strip()))
+  return listaLibros
+
+#---------------------------------------
+
+
 
 # Create your views here.
 
@@ -34,23 +80,19 @@ def registrarUsuario(request):
 
 
 def import_csv(request): #hay errores en los que no sabemos por que no manda
-    books = []
-    with open ("books1.csv", "r") as csv_file:
-        data = list(csv.reader(csv_file, delimiter=","))
-        for row in data [1:]:
-            books.append(
-                Libro(
-                    isbn13=row[5],
-                    titulo=row[1],
-                    autores=row[2],
-                    num_pages=[7],
-                    fecha_publicacion=[10],
-                    editorial=[11]
-                )
-            )
-    if len(books) > 0:
-        Libro.objects.create(books)
-    
-    return HttpResponse("Esta guevonada importó")
+    if request.method == 'POST':
+      print("Me meto aca")
 
-#Pendiente: Login, se trabajará mas adelante
+
+      csv_Name = request.POST.get('csvName')
+      dfLibros = pd.read_csv(csv_Name,sep=",",header = None)
+      listaLibros = registradorLibros(dfLibros)
+
+      for lib in listaLibros:
+        libro = Libro.objects.create(bookID = lib.getID(), titulo = lib.getTitle() , autores = lib.getAuthor(),isbn = lib.getIsbn() , num_pages = lib.getNumPage() , fecha_publicacion = lib.getPublicationDate( ), editorial = lib.getPublisher() ) 
+      return render (request, 'import_csv.html', {'success':True})    
+    else:
+        return render (request, 'import_csv.html')
+        
+    
+    return HttpResponse("Importacion exitosa")
