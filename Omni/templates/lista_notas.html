@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+    <title>Mis Notas</title>
+
+{% endblock %}
+
+{% block contenido %}
+
+    <h1 style="color: blue">Lista de Notas</h1>
+    <ul>
+        {% for nota in notas %}
+            <li style="color: blue"><a href="{% url 'detalle_nota' pk=nota.pk %}"> {{ nota.titulo_nota }}</a></li>
+        {% empty %}
+            <li style="color: blue"> No se ha creado ninguna nota</li>
+        {% endfor %}
+
+        <a href="{% url 'crear_nota' %}" class="btn btn-success text-white" style="background-color: green;">Crear Nota</a>
+    </ul>
+
+{% endblock %}

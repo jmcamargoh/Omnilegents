@@ -1,7 +1,7 @@
-import csv
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Usuario, Libro
+from .models import Usuario, Libro, Nota
+from .forms import NotaForm
 import pandas as pd
 
 
@@ -96,3 +96,47 @@ def import_csv(request): #hay errores en los que no sabemos por que no manda
         
     
     return HttpResponse("Importacion exitosa")
+
+
+#---------------------------------------
+# Manejo de las notas en la aplicación
+
+def crear_nota(request):
+    if request.method == 'POST':
+        form = NotaForm(request.POST)
+        if form.is_valid():
+          nota = form.save(commit=False)
+          nota.save()
+          return redirect('lista_notas')
+    else:
+      form=NotaForm()
+    return render (request, 'crear_nota.html', {'form': form})
+
+
+def editar_nota(request, pk):
+   nota = get_object_or_404(Nota, pk=pk)
+   if request.method == 'POST':
+      form = NotaForm(request.POST, instance=nota)
+      if form.is_valid():
+         nota = form.save(commit=False)
+         nota.save()
+         return redirect('detalle_nota', pk=nota.pk)
+   else:
+      form=NotaForm(instance=nota)
+   return render(request, 'editar_nota.html', {'form':form})
+
+
+def eliminar_nota(request, pk):
+   nota = get_object_or_404(Nota, pk=pk)
+   nota.delete()
+   return redirect('lista_notas')
+
+
+def lista_notas(request):
+   notas = Nota.objects.all()
+   return render(request, 'lista_notas.html', {'notas':notas})
+
+
+def detalle_nota(request, pk):
+   nota = get_object_or_404(Nota, pk=pk)
+   return render(request, 'detalle_nota.html', {'nota':nota})
