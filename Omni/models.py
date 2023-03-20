@@ -27,3 +27,16 @@ class Libro(models.Model):
     def __str__(self):
         texto = "{1} ({0})"
         return texto.format(self.titulo, self.isbn)
+
+
+class Nota(models.Model):
+    nota_id=models.IntegerField(primary_key=True)
+    #id_UsuarioNota=models.ForeignKey(Usuario, on_delete=models.CASCADE)    PENDIENTE DE REALIZARSE, DADO QUE PARA ESTA ITERACION AUN NO HAY MANEJO DE USUARIOS
+    titulo_nota=models.CharField(max_length=100)
+    contenido_nota=models.TextField()
+    fecha_creacion=models.DateTimeField(auto_now_add=True)
+    fecha_modificacion=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        texto = "{1} ({0})"
+        return texto.format(self.titulo_nota, self.nota_id)
