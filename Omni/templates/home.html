@@ -12,23 +12,22 @@
 
 {% block contenido %}
 
-<h2 style="color: white;">Menú Principal Omnilegents</h2>
+<h2 style="color: blue;">Menú Principal Omnilegents</h2>
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-12 col-xl-1">
         <div class="card" style="background-color: rgba(141, 181, 255, 0.986);">
 
             <img class="card-img-top" src="{% static 'app/img/smallbook.png' %}" alt="card-img-top" width="100px" height="120px"/>
-            <a href="{% url 'libros' %}" class="btn btn-block" style="color: white;">Libros</a>
+            <a href="{% url 'libros' %}" class="btn btn-info" style="color: white;">Libros</a>
 
         </div>
     </div>
 </div>
 
     <nav id="home_navi">
-        <li>
-            <a href="{% url 'mislibros'  %}">Mis Libros</a>
-        </li>
+            <a href="{% url 'mislibros'  %}" class="btn btn-info">Mis Libros</a>
+            <a href="{% url 'lista_notas' %}" class="btn btn-info">Notas</a>
     </nav>
 
 {% endblock %}

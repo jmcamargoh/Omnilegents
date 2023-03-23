@@ -25,5 +25,10 @@ urlpatterns = [
     path("mislibros/", OmniViews.mislibros, name='mislibros'),
     path('registro/', OmniViews.registro, name="registro"),
     path('registrarUsuario/', OmniViews.registrarUsuario),
-    path("import_csv/", OmniViews.import_csv)
+    path("import_csv/", OmniViews.import_csv),
+    path("lista_notas/", OmniViews.lista_notas, name="lista_notas"), #funciona
+    path("nota/<int:pk>/", OmniViews.detalle_nota, name="detalle_nota"), 
+    path("nota/crear/", OmniViews.crear_nota, name="crear_nota"), #no funciona
+    path('nota/editar/<int:pk>/', OmniViews.editar_nota, name='editar_nota'),
+    path('nota/eliminar/<int:pk>/', OmniViews.eliminar_nota, name='eliminar_nota'),
 ]

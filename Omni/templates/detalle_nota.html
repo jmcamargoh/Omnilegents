@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+    <title>Mis Notas</title>
+
+{% endblock %}
+
+{% block contenido %}
+
+    <h2 style="color: blue">{{ nota.titulo_nota }}</h2>
+    <p style="color:blue">{{ nota.contenido_nota }}</p>
+    <p style="color: blue">Creada el {{ nota.fecha_creacion }}</p>
+    <p style="color: blue">Modificada el {{ nota.fecha_modificacion }}</p>
+    <a href="{% url 'editar_nota' pk=nota.pk %}" class="btn btn-warning" style="background-color: yellow;">Editar</a>
+    <a href="{% url 'eliminar_nota' pk=nota.pk %}" class="btn btn-danger text-white" style="background-color: red;">Eliminar</a>
+    <a href="{% url 'lista_notas' %}" class="btn btn-info">Volver</a>
+
+    
+
+{% endblock %}
