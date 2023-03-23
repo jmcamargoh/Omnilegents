@@ -26,12 +26,20 @@ urlpatterns = [
     path('registro/', OmniViews.registro, name="registro"),
     path('registrarUsuario/', OmniViews.registrarUsuario),
     path("import_csv/", OmniViews.import_csv),
+
     path("lista_notas/", OmniViews.lista_notas, name="lista_notas"), #funciona
     path("nota/<int:pk>/", OmniViews.detalle_nota, name="detalle_nota"), 
     path("nota/crear/", OmniViews.crear_nota, name="crear_nota"), #no funciona
     path('nota/editar/<int:pk>/', OmniViews.editar_nota, name='editar_nota'),
     path('nota/eliminar/<int:pk>/', OmniViews.eliminar_nota, name='eliminar_nota'),
+
     path('retosylogros/',OmniViews.retosylogros, name="retosylogros"),
     path('retosylogros/retos/',OmniViews.retos  , name = "retos"),
     path('retosylogros/logros/',OmniViews.logros  , name = "logros"),
+
+    path('recordatorios/',OmniViews.recordatorios,name="recordatorios"),
+    path("recordatorio/<int:pk>/", OmniViews.detalle_recordatorio, name="detalle_recordatorio"), 
+    path("recordatorio/crear/", OmniViews.crear_recordatorio, name="crear_recordatorio"),
+    path('recordatorio/eliminar/<int:pk>/', OmniViews.eliminar_recordatorio, name='eliminar_recordatorio'),
+
 ]

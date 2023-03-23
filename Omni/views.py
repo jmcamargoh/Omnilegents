@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 
-from .models import Usuario, Libro, Nota, Reto
+from .models import Usuario, Libro, Nota, Reto, Recordatorio
 
-from .forms import NotaForm
+from .forms import NotaForm, RecordatorioForm
 import pandas as pd
 
 
@@ -143,6 +143,34 @@ def detalle_nota(request, pk):
    return render(request, 'detalle_nota.html', {'nota':nota})
 # ----------------------------------------------------------------
 
+#Manejo de los recordatorios
+def crear_recordatorio(request):
+    if request.method == 'POST':
+        form = RecordatorioForm(request.POST)
+        if form.is_valid():
+          rec = form.save(commit=False)
+          rec.save()
+          return redirect('recordatorios')
+    else:
+      form=RecordatorioForm()
+    return render (request, 'crear_recordatorio.html', {'form': form})
+
+
+def eliminar_recordatorio(request, pk):
+   rec = get_object_or_404(Recordatorio, pk=pk)
+   rec.delete()
+   return redirect('recordatorios')
+
+
+def recordatorios(request):
+  recordatorios = Recordatorio.objects.all()
+  return render(request, 'recordatorios.html', {'recordatorios':recordatorios})
+
+
+def detalle_recordatorio(request, pk):
+   rec = get_object_or_404(Recordatorio, pk=pk)
+   return render(request, 'detalle_recordatorios.html', {'rec':rec})
+#-----------------------------------------------------------------
 def retosylogros(request):
    return render (request, 'retosylogros.html')
 

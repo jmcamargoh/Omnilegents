@@ -43,6 +43,7 @@ class Nota(models.Model):
     
 class Reto(models.Model):
     reto_id = models.IntegerField(primary_key=True)
+    #id_UsuarioNota=models.ForeignKey(Usuario, on_delete=models.CASCADE)  PENDIENTE DE REALIZARSE, DADO QUE PARA ESTA ITERACION AUN NO HAY MANEJO DE USUARIOS
     descripcion = models.CharField(max_length=100)
     tituloReto = models.CharField(max_length=20)
     estadoReto = models.BooleanField()
@@ -50,3 +51,15 @@ class Reto(models.Model):
     def __str__(self):
         texto = "{0} ({1})"
         return texto.format(self.tituloReto, self.reto_id)
+    
+class Recordatorio(models.Model):
+    recordatorio_id = models.IntegerField(primary_key=True)
+    #id_UsuarioNota=models.ForeignKey(Usuario, on_delete=models.CASCADE)  PENDIENTE DE REALIZARSE, DADO QUE PARA ESTA ITERACION AUN NO HAY MANEJO DE USUARIOS
+    mensaje = models.CharField(max_length=20)
+    hora = models.CharField(max_length=10)
+    metaDiaria = models.IntegerField()
+
+    def __str__(self):
+        texto = "{0} ({1})"
+        return texto.format(self.tituloReto, self.reto_id)
+    
