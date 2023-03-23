@@ -140,3 +140,7 @@ def lista_notas(request):
 def detalle_nota(request, pk):
    nota = get_object_or_404(Nota, pk=pk)
    return render(request, 'detalle_nota.html', {'nota':nota})
+# ----------------------------------------------------------------
+
+def retosylogros(request):
+   return render (request, 'retosylogros.html')
