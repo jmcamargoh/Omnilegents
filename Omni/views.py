@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Usuario, Libro, Nota
+
+from .models import Usuario, Libro, Nota, Reto
+
 from .forms import NotaForm
 import pandas as pd
 
@@ -79,9 +81,8 @@ def registrarUsuario(request):
     return redirect ('/')
 
 
-def import_csv(request): #hay errores en los que no sabemos por que no manda
+def import_csv(request): 
     if request.method == 'POST':
-      print("Me meto aca")
 
 
       csv_Name = request.POST.get('csvName')
@@ -144,3 +145,10 @@ def detalle_nota(request, pk):
 
 def retosylogros(request):
    return render (request, 'retosylogros.html')
+
+def retos(request):
+   retosListados = Reto.objects.all()
+   return render (request,'retos.html', {'retosListados':retosListados})
+
+def logros(request):
+  return render (request, 'logros.html')

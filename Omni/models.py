@@ -40,3 +40,13 @@ class Nota(models.Model):
     def __str__(self):
         texto = "{1} ({0})"
         return texto.format(self.titulo_nota, self.nota_id)
+    
+class Reto(models.Model):
+    reto_id = models.IntegerField(primary_key=True)
+    descripcion = models.CharField(max_length=100)
+    tituloReto = models.CharField(max_length=20)
+    estadoReto = models.BooleanField()
+
+    def __str__(self):
+        texto = "{0} ({1})"
+        return texto.format(self.tituloReto, self.reto_id)

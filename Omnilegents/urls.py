@@ -31,4 +31,7 @@ urlpatterns = [
     path("nota/crear/", OmniViews.crear_nota, name="crear_nota"), #no funciona
     path('nota/editar/<int:pk>/', OmniViews.editar_nota, name='editar_nota'),
     path('nota/eliminar/<int:pk>/', OmniViews.eliminar_nota, name='eliminar_nota'),
+    path('retosylogros/',OmniViews.retosylogros, name="retosylogros"),
+    path('retosylogros/retos/',OmniViews.retos  , name = "retos"),
+    path('retosylogros/logros/',OmniViews.logros  , name = "logros"),
 ]
