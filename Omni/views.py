@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from .models import Usuario, Libro, Nota, Reto, Recordatorio
 
@@ -53,32 +54,19 @@ def registradorLibros(dataframe):
 
 # Create your views here.
 
+@login_required
 def home(request):
     return render (request, 'home.html') #página inicial a donde se acceden a las opciones
 
+@login_required
 def libros(request):
     return render (request, 'libros.html') #página de libros (busqueda solamente)
 
-def login(request):
-    return render (request, 'login.html') #página del login
-
+@login_required
 def mislibros(request):
     return render (request, 'mislibros.html') #página de mis libros
 
-def registro(request):
-    return render (request, 'registro.html') #página de registro
 
-def registrarUsuario(request):
-    id_Usuario=request.POST['numIdUsuario']
-    nombre_usuario=request.POST['txtNombreUs']
-    correo=request.POST['txtCorreoUs']
-    password=request.POST['txtPassword']
-    domicilio=request.POST['txtDomicilio']
-    fecha_nacimiento=request.POST['dateNacimiento']
-
-    usuario=Usuario.objects.create(id_Usuario=id_Usuario, nombre_usuario=nombre_usuario, correo=correo, password=password, domicilio=domicilio, fecha_nacimiento=fecha_nacimiento)
-
-    return redirect ('/')
 
 
 def import_csv(request): 
@@ -102,6 +90,7 @@ def import_csv(request):
 #---------------------------------------
 # Manejo de las notas en la aplicación
 
+@login_required
 def crear_nota(request):
     if request.method == 'POST':
         form = NotaForm(request.POST)
@@ -113,7 +102,7 @@ def crear_nota(request):
       form=NotaForm()
     return render (request, 'crear_nota.html', {'form': form})
 
-
+@login_required
 def editar_nota(request, pk):
    nota = get_object_or_404(Nota, pk=pk)
    if request.method == 'POST':
@@ -126,24 +115,25 @@ def editar_nota(request, pk):
       form=NotaForm(instance=nota)
    return render(request, 'editar_nota.html', {'form':form})
 
-
+@login_required
 def eliminar_nota(request, pk):
    nota = get_object_or_404(Nota, pk=pk)
    nota.delete()
    return redirect('lista_notas')
 
-
+@login_required
 def lista_notas(request):
    notas = Nota.objects.all()
    return render(request, 'lista_notas.html', {'notas':notas})
 
-
+@login_required
 def detalle_nota(request, pk):
    nota = get_object_or_404(Nota, pk=pk)
    return render(request, 'detalle_nota.html', {'nota':nota})
 # ----------------------------------------------------------------
 
 #Manejo de los recordatorios
+@login_required
 def crear_recordatorio(request):
     if request.method == 'POST':
         form = RecordatorioForm(request.POST)
@@ -155,28 +145,31 @@ def crear_recordatorio(request):
       form=RecordatorioForm()
     return render (request, 'crear_recordatorio.html', {'form': form})
 
-
+@login_required
 def eliminar_recordatorio(request, pk):
    rec = get_object_or_404(Recordatorio, pk=pk)
    rec.delete()
    return redirect('recordatorios')
 
-
+@login_required
 def recordatorios(request):
   recordatorios = Recordatorio.objects.all()
   return render(request, 'recordatorios.html', {'recordatorios':recordatorios})
 
-
+@login_required
 def detalle_recordatorio(request, pk):
    rec = get_object_or_404(Recordatorio, pk=pk)
    return render(request, 'detalle_recordatorios.html', {'rec':rec})
 #-----------------------------------------------------------------
+@login_required
 def retosylogros(request):
    return render (request, 'retosylogros.html')
 
+@login_required
 def retos(request):
    retosListados = Reto.objects.all()
    return render (request,'retos.html', {'retosListados':retosListados})
 
+@login_required
 def logros(request):
   return render (request, 'logros.html')

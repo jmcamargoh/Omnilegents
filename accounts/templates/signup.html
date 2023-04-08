@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+    <title>Omnilegents Registro</title>
+
+{% endblock %}
+
+{% block contenido %}
+
+<div class="col-md-6 mx-auto d-block">
+    <div class="card mb-3" style="background-color: blue; text-align: center;">
+        <div>
+            <div class="card-body">
+                <h4 class="card-title" style="color: white">¡Regístrese Ahora!</h4>
+                {% if error %}
+                    <div class="alert alert-danger mt-3" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+                <p class="card-text">
+                    <form method="POST" style="color: white">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success">Registrarse</button>
+                    </form>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
