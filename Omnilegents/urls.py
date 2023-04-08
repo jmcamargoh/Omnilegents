@@ -14,22 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from Omni import views as OmniViews
+
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', OmniViews.login, name="login"),
+    #path('', OmniViews.login, name="login"),
     path('home/', OmniViews.home, name="home"),
     path("libros/", OmniViews.libros, name="libros"), #Para acceder a esta es el mismo enlace con /libros
     path("mislibros/", OmniViews.mislibros, name='mislibros'),
-    path('registro/', OmniViews.registro, name="registro"),
-    path('registrarUsuario/', OmniViews.registrarUsuario),
+    #path('registro/', OmniViews.registro, name="registro"),
+    #path('registrarUsuario/', OmniViews.registrarUsuario),
     path("import_csv/", OmniViews.import_csv),
+    path('', include('accounts.urls')),
 
-    path("lista_notas/", OmniViews.lista_notas, name="lista_notas"), #funciona
+    path("lista_notas/", OmniViews.lista_notas, name="lista_notas"), 
     path("nota/<int:pk>/", OmniViews.detalle_nota, name="detalle_nota"), 
-    path("nota/crear/", OmniViews.crear_nota, name="crear_nota"), #no funciona
+    path("nota/crear/", OmniViews.crear_nota, name="crear_nota"), 
     path('nota/editar/<int:pk>/', OmniViews.editar_nota, name='editar_nota'),
     path('nota/eliminar/<int:pk>/', OmniViews.eliminar_nota, name='eliminar_nota'),
 
