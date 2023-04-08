@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+    <title>Recordatorios</title>
+
+{% endblock %}
+
+{% block contenido %}
+
+    <h1 style="color: blue">Recordatorios</h1>
+    <ul>
+        {% for rec in recordatorios %}
+            <li style="color: blue"><a href="{% url 'detalle_recordatorio' pk=rec.pk %}"> Hora: {{rec.hora}}, Msg: {{rec.mensaje}}</a></li>
+        {% empty %}
+            <li style="color: blue"> No hay ningun recordatorio</li>
+        {% endfor %}
+
+        <a href="{% url 'crear_recordatorio' %}" class="btn btn-success text-white" style="background-color: green;">Crear recordatorio</a>
+    </ul>
+
+{% endblock %}

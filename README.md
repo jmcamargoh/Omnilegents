@@ -4,7 +4,8 @@
 - Python equal or superior to 3.6 version.  
 - Pip tool.  
 - Django framework. Automatically brings the necessary libraries for the server execution.  
-- Git tool. Import and export from a GitHub repository.  
+- Git tool. Import and export from a GitHub repository.
+- Python pandas
 
 ## Commands
 The following commands are expected to be used on system cmd while located in the folder designated for the project (for Windows). Words that are in bold indicate that their name can be modified by the contributor:
