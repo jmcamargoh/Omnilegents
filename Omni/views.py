@@ -96,6 +96,7 @@ def crear_nota(request):
         form = NotaForm(request.POST)
         if form.is_valid():
           nota = form.save(commit=False)
+          nota.id_UsuarioNota = request.user
           nota.save()
           return redirect('lista_notas')
     else:
@@ -109,6 +110,7 @@ def editar_nota(request, pk):
       form = NotaForm(request.POST, instance=nota)
       if form.is_valid():
          nota = form.save(commit=False)
+         nota.id_UsuarioNota = request.user
          nota.save()
          return redirect('detalle_nota', pk=nota.pk)
    else:
@@ -118,12 +120,13 @@ def editar_nota(request, pk):
 @login_required
 def eliminar_nota(request, pk):
    nota = get_object_or_404(Nota, pk=pk)
-   nota.delete()
+   if nota.id_UsuarioNota == request.user:
+      nota.delete()
    return redirect('lista_notas')
 
 @login_required
 def lista_notas(request):
-   notas = Nota.objects.all()
+   notas = Nota.objects.filter(id_UsuarioNota = request.user)
    return render(request, 'lista_notas.html', {'notas':notas})
 
 @login_required

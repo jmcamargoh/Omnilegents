@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -31,7 +32,7 @@ class Libro(models.Model):
 
 class Nota(models.Model):
     nota_id=models.IntegerField(primary_key=True)
-    #id_UsuarioNota=models.ForeignKey(Usuario, on_delete=models.CASCADE)    PENDIENTE DE REALIZARSE, DADO QUE PARA ESTA ITERACION AUN NO HAY MANEJO DE USUARIOS
+    id_UsuarioNota=models.ForeignKey(User, on_delete=models.CASCADE)   
     titulo_nota=models.CharField(max_length=100)
     contenido_nota=models.TextField()
     fecha_creacion=models.DateTimeField(auto_now_add=True)
