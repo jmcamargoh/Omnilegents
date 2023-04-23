@@ -22,14 +22,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('', OmniViews.login, name="login"),
     path('home/', OmniViews.home, name="home"),
     path("libros/", OmniViews.libros, name="libros"), #Para acceder a esta es el mismo enlace con /libros
     path("mislibros/", OmniViews.mislibros, name='mislibros'),
-    #path('registro/', OmniViews.registro, name="registro"),
-    #path('registrarUsuario/', OmniViews.registrarUsuario),
     path("import_csv/", OmniViews.import_csv),
     path('', include('accounts.urls')),
+    path('agregarlibro/', OmniViews.agregarLibro, name='agregarLibro'),
 
     path("lista_notas/", OmniViews.lista_notas, name="lista_notas"), 
     path("nota/<int:pk>/", OmniViews.detalle_nota, name="detalle_nota"), 
