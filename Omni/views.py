@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib import messages
 
 from .models import Usuario, Libro, Nota, Reto, Recordatorio, Lib_User
 
@@ -71,8 +72,13 @@ def libros(request):
 @login_required
 def agregarLibro(request, libro_id):
    libro=Libro.objects.get(bookID=libro_id)
-   lib_user=Lib_User(libro_id=libro.bookID, usuario=request.user)
-   lib_user.save()
+
+   if Lib_User.objects.filter(libro_id=libro.bookID, usuario=request.user).exists():
+      messages.error(request, f"El libro ya se encuentra en tu Biblioteca")
+   else:
+      lib_user=Lib_User(libro_id=libro.bookID, usuario=request.user)
+      lib_user.save()
+      messages.success(request, f"El libro ha sido agregado a tu Biblioteca")
    return render (request, 'home.html')
 
 
