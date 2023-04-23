@@ -69,6 +69,11 @@ def libros(request):
     return render (request, 'libros.html', {'libroBuscado':libroBuscado, 'libros':libros}) #página de libros (busqueda solamente)
 
 @login_required
+def agregarLibro(request):
+   return render (request, 'libros.html')
+
+
+@login_required
 def mislibros(request):
     return render (request, 'mislibros.html') #página de mis libros
 
