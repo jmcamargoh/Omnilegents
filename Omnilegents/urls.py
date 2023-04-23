@@ -27,7 +27,7 @@ urlpatterns = [
     path("mislibros/", OmniViews.mislibros, name='mislibros'),
     path("import_csv/", OmniViews.import_csv),
     path('', include('accounts.urls')),
-    path('agregarlibro/', OmniViews.agregarLibro, name='agregarLibro'),
+    path('agregarlibro/<int:libro_id>/', OmniViews.agregarLibro, name='agregarLibro'),
 
     path("lista_notas/", OmniViews.lista_notas, name="lista_notas"), 
     path("nota/<int:pk>/", OmniViews.detalle_nota, name="detalle_nota"), 

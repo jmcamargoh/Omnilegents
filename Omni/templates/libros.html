@@ -34,7 +34,12 @@
                         <h5 class="card-title fw-bold">{{ libro.titulo }}</h5>
                         </a>
                         <h6 class="card-info">Código ISBN: {{ libro.isbn }}</h6>
-                        <a href="{% url 'agregarLibro' %}" class="btn btn-success">Agregar a mi Biblioteca</a>
+
+                        <form method="post" action="{% url 'agregarLibro' libro.bookID %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="libro_id" value="{{ libro.bookID }}">
+                            <button type="submit" class="btn btn-success">Agregar a mi Biblioteca</button>
+                        </form>
                     </div>
                 </div>
             {% endfor %}

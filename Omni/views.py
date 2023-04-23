@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
-from .models import Usuario, Libro, Nota, Reto, Recordatorio
+from .models import Usuario, Libro, Nota, Reto, Recordatorio, Lib_User
 
 from .forms import NotaForm, RecordatorioForm
 import pandas as pd
@@ -69,8 +69,11 @@ def libros(request):
     return render (request, 'libros.html', {'libroBuscado':libroBuscado, 'libros':libros}) #página de libros (busqueda solamente)
 
 @login_required
-def agregarLibro(request):
-   return render (request, 'libros.html')
+def agregarLibro(request, libro_id):
+   libro=Libro.objects.get(bookID=libro_id)
+   lib_user=Lib_User(libro_id=libro.bookID, usuario=request.user)
+   lib_user.save()
+   return render (request, 'home.html')
 
 
 @login_required
