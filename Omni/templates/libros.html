@@ -9,15 +9,39 @@
 
 {% block contenido %}
 
-    <h1>Libros</h1>
-    
-    <p>
-        Sección donde encontrarás tus libros por nombre o por su código ISBN
-    </p>
+    <div class="container">
 
-    <div class="buscador">
-        <input type="text" name="bookfinder"/>      <!-- Barra para la búsqueda de libros -->
-        <button type="button" class="btn btn-primary">Buscar</button>
+        <h1 style="color: blue;">Libros</h1>
+
+        <form action="">
+            <div class="mb-3">
+                <label for="searchBook" class="form-label">
+                    Buscar libros por Título o Código ISBN:
+                </label>
+                <input type="text" class="form-control" name="searchBook"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+
+        <p>Buscando por {{ libroBuscado }}</p>
+        <br />
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for libro in libros %}
+            <div v-for="libro in libros" class="col">
+                <divc class="card">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ libro.titulo }}</h5>
+                        </a>
+                        <h6 class="card-info">Código ISBN: {{ libro.isbn }}</h6>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            <br />
+            <br />
+        </div>
+
     </div>
 
 {% endblock %}

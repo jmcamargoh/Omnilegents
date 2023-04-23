@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from .models import Usuario, Libro, Nota, Reto, Recordatorio
 
@@ -60,7 +61,12 @@ def home(request):
 
 @login_required
 def libros(request):
-    return render (request, 'libros.html') #página de libros (busqueda solamente)
+    libroBuscado = request.GET.get('searchBook')
+    if libroBuscado:
+       libros = Libro.objects.filter(Q(titulo=libroBuscado) | Q(isbn=libroBuscado))
+    else:
+       libros = Libro.objects.order_by('?')[:20]
+    return render (request, 'libros.html', {'libroBuscado':libroBuscado, 'libros':libros}) #página de libros (busqueda solamente)
 
 @login_required
 def mislibros(request):
