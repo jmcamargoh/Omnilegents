@@ -9,6 +9,18 @@
 
 {% block contenido %}
 
+    {% if agregado %}
+        <div class="alert alert-success" role="alert">
+            El libro ha sido agregado a la biblioteca correctamente.
+        </div>
+    {% endif %}
+
+    {% if ya_existe %}
+        <div class="alert alert-danger" role="alert">
+            El libro ya se encuentra en la biblioteca.
+        </div>
+    {% endif %} 
+
     <div class="container">
 
         <h1 style="color: blue;">Libros</h1>
