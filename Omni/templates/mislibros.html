@@ -9,10 +9,29 @@
 
 {% block contenido %}
 
-    <h1>Mis Libros</h1>
+    <div class="container">
 
-    <p>
-        ¡En esta sección encontrarás los libros que estás leyendo o que has leído!
-    </p>
+        <h1 style="color: blue;">Mis Libros</h1>
+        <p style="color: blue;">¡En esta sección encontrarás los libros que estás leyendo o que has leído!</p>
+
+        {% if libros_usuario %}
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for libro in libros_usuario %}
+                    <div v-for="libro in libros" class="col">
+                        <div class="card" style="background-color: lightskyblue;">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">{{ libro.libro.titulo }}</h5>
+                                </a>
+                                <h6 class="card-info">Código ISBN: {{ libro.libro.isbn }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h6 style="color: blue;">¡No tienes libros agregados!</h6>
+        {% endif %} 
+
+    </div>
 
 {% endblock %}

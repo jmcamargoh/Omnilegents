@@ -55,7 +55,6 @@ def import_csv(request):
       csv_Name = request.POST.get('csvName')
       dfLibros = pd.read_csv(csv_Name,sep=",",header = None)
       listaLibros = registradorLibros(dfLibros)
-
       for lib in listaLibros:
         libro = Libro.objects.create(bookID = lib.getID(), titulo = lib.getTitle() , autores = lib.getAuthor(),isbn = lib.getIsbn() , num_pages = lib.getNumPage() , fecha_publicacion = lib.getPublicationDate( ), editorial = lib.getPublisher() ) 
       return render (request, 'import_csv.html', {'success':True})    
@@ -99,7 +98,10 @@ def agregarLibro(request, libro_id):
 
 @login_required
 def mislibros(request):
-    return render (request, 'mislibros.html') #página de mis libros
+    usuario = request.user
+    libros_usuario = Lib_User.objects.filter(usuario=usuario)
+    context = {'libros_usuario':libros_usuario}
+    return render (request, 'mislibros.html', context)
 
 #---------------------------------------
 # Manejo de las notas en la aplicación
