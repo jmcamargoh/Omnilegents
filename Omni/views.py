@@ -4,15 +4,15 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
 
-from .models import Usuario, Libro, Nota, Reto, Recordatorio, Lib_User
+from .models import Libro, Nota, Reto, Recordatorio, Lib_User
 
 from .forms import NotaForm, RecordatorioForm
 import pandas as pd
 
 
-
 #---------------------------------------
- 
+# Poblado de la BD de libro con el Dataset 
+
 class LibroSTR:
   def __init__(self, bookID,title, author, isbn, num_page, publication_date, publisher):
     self.bookID = bookID
@@ -50,15 +50,28 @@ def registradorLibros(dataframe):
     listaLibros.append(LibroSTR(str(dataframe[0][a]).strip(),str(dataframe[1][a]).strip(),str(dataframe[2][a]).strip(),str(dataframe[3][a]).strip(),str(dataframe[4][a]).strip(),str(dataframe[5][a]).strip(),str(dataframe[6][a]).strip()))
   return listaLibros
 
+def import_csv(request): 
+    if request.method == 'POST':
+      csv_Name = request.POST.get('csvName')
+      dfLibros = pd.read_csv(csv_Name,sep=",",header = None)
+      listaLibros = registradorLibros(dfLibros)
+
+      for lib in listaLibros:
+        libro = Libro.objects.create(bookID = lib.getID(), titulo = lib.getTitle() , autores = lib.getAuthor(),isbn = lib.getIsbn() , num_pages = lib.getNumPage() , fecha_publicacion = lib.getPublicationDate( ), editorial = lib.getPublisher() ) 
+      return render (request, 'import_csv.html', {'success':True})    
+    else:
+        return render (request, 'import_csv.html')
+    return HttpResponse("Importacion exitosa")
+
 #---------------------------------------
-
-
-
-# Create your views here.
+# Página Home
 
 @login_required
 def home(request):
     return render (request, 'home.html') #página inicial a donde se acceden a las opciones
+
+#---------------------------------------
+# Búsqueda y agregación de libros
 
 @login_required
 def libros(request):
@@ -81,31 +94,12 @@ def agregarLibro(request, libro_id):
       messages.success(request, f"El libro ha sido agregado a tu Biblioteca")
    return render (request, 'home.html')
 
+#---------------------------------------
+# Sección MisLibros
 
 @login_required
 def mislibros(request):
     return render (request, 'mislibros.html') #página de mis libros
-
-
-
-
-def import_csv(request): 
-    if request.method == 'POST':
-
-
-      csv_Name = request.POST.get('csvName')
-      dfLibros = pd.read_csv(csv_Name,sep=",",header = None)
-      listaLibros = registradorLibros(dfLibros)
-
-      for lib in listaLibros:
-        libro = Libro.objects.create(bookID = lib.getID(), titulo = lib.getTitle() , autores = lib.getAuthor(),isbn = lib.getIsbn() , num_pages = lib.getNumPage() , fecha_publicacion = lib.getPublicationDate( ), editorial = lib.getPublisher() ) 
-      return render (request, 'import_csv.html', {'success':True})    
-    else:
-        return render (request, 'import_csv.html')
-        
-    
-    return HttpResponse("Importacion exitosa")
-
 
 #---------------------------------------
 # Manejo de las notas en la aplicación
@@ -153,9 +147,10 @@ def lista_notas(request):
 def detalle_nota(request, pk):
    nota = get_object_or_404(Nota, pk=pk)
    return render(request, 'detalle_nota.html', {'nota':nota})
-# ----------------------------------------------------------------
 
-#Manejo de los recordatorios
+#---------------------------------------
+# Manejo de los recordatorios en la aplicación
+
 @login_required
 def crear_recordatorio(request):
     if request.method == 'POST':
@@ -183,7 +178,10 @@ def recordatorios(request):
 def detalle_recordatorio(request, pk):
    rec = get_object_or_404(Recordatorio, pk=pk)
    return render(request, 'detalle_recordatorios.html', {'rec':rec})
-#-----------------------------------------------------------------
+
+#---------------------------------------
+# Retos Y Logros
+
 @login_required
 def retosylogros(request):
    return render (request, 'retosylogros.html')
