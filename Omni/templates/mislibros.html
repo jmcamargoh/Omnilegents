@@ -23,6 +23,16 @@
                                 <h5 class="card-title fw-bold">{{ libro.libro.titulo }}</h5>
                                 </a>
                                 <h6 class="card-info">Código ISBN: {{ libro.libro.isbn }}</h6>
+                                </a>
+                                
+                                <h6 class="card-info">Paginas leidas: {{ libro.pagleidas }} de {{ libro.libro.num_pages }}</h6>
+                                
+                                <form method="post" action="{% url 'cambiarPagLeidas' libro.libuser_ID %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="libuser_id" value="{{ libro.libuser_ID }}">
+                                    <button type="submit" class="btn btn-success">Lectura</button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
