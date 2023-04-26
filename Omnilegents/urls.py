@@ -25,6 +25,8 @@ urlpatterns = [
     path('home/', OmniViews.home, name="home"),
     path("libros/", OmniViews.libros, name="libros"), #Para acceder a esta es el mismo enlace con /libros
     path("mislibros/", OmniViews.mislibros, name='mislibros'),
+    path("cambiarPagLeidas/<int:pk>/",OmniViews.cambiarPagLeidas,name="cambiarPagLeidas"),
+    
     path("import_csv/", OmniViews.import_csv),
     path('', include('accounts.urls')),
     path('agregarlibro/<int:libro_id>/', OmniViews.agregarLibro, name='agregarLibro'),
@@ -32,6 +34,7 @@ urlpatterns = [
     path("lista_notas/", OmniViews.lista_notas, name="lista_notas"), 
     path("nota/<int:pk>/", OmniViews.detalle_nota, name="detalle_nota"), 
     path("nota/crear/", OmniViews.crear_nota, name="crear_nota"), 
+
     path('nota/editar/<int:pk>/', OmniViews.editar_nota, name='editar_nota'),
     path('nota/eliminar/<int:pk>/', OmniViews.eliminar_nota, name='eliminar_nota'),
 

@@ -6,7 +6,7 @@ from django.contrib import messages
 
 from .models import Libro, Nota, Reto, Recordatorio, Lib_User
 
-from .forms import NotaForm, RecordatorioForm
+from .forms import NotaForm, RecordatorioForm, cambiarPagLeidasForm
 import pandas as pd
 
 
@@ -88,7 +88,7 @@ def agregarLibro(request, libro_id):
    if Lib_User.objects.filter(libro_id=libro.bookID, usuario=request.user).exists():
       messages.error(request, f"El libro ya se encuentra en tu Biblioteca")
    else:
-      lib_user=Lib_User(libro_id=libro.bookID, usuario=request.user)
+      lib_user=Lib_User(libro_id=libro.bookID, usuario=request.user, pagleidas=0)
       lib_user.save()
       messages.success(request, f"El libro ha sido agregado a tu Biblioteca")
    return render (request, 'home.html')
@@ -100,8 +100,25 @@ def agregarLibro(request, libro_id):
 def mislibros(request):
     usuario = request.user
     libros_usuario = Lib_User.objects.filter(usuario=usuario)
+
     context = {'libros_usuario':libros_usuario}
     return render (request, 'mislibros.html', context)
+
+@login_required
+def cambiarPagLeidas(request, pk):
+   LibUser = get_object_or_404(Lib_User, pk = pk)
+
+   if request.method == 'POST':
+      form = cambiarPagLeidasForm(request.POST, instance=LibUser)
+      if form.is_valid():
+         LibUser = form.save(commit=False)
+         LibUser.usuario = request.user
+         LibUser.save()
+         return redirect('../../mislibros')
+   else:
+      form=cambiarPagLeidasForm(instance=LibUser)
+   return render(request, 'cambiarPagLeidas.html', {'form':form})
+
 
 #---------------------------------------
 # Manejo de las notas en la aplicación

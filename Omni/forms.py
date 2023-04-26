@@ -1,5 +1,5 @@
 from django import forms
-from .models import Nota, Recordatorio
+from .models import Nota, Recordatorio, Lib_User
 
 class NotaForm(forms.ModelForm):
     class Meta:
@@ -10,3 +10,8 @@ class RecordatorioForm(forms.ModelForm):
     class Meta:
         model = Recordatorio
         fields = ['mensaje','hora','metaDiaria']
+
+class cambiarPagLeidasForm(forms.ModelForm):
+    class Meta:
+        model = Lib_User
+        fields = ['pagleidas']

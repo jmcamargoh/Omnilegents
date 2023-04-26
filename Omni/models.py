@@ -34,6 +34,7 @@ class Lib_User(models.Model):
     libuser_ID=models.IntegerField(primary_key=True, unique=True, null=False)
     usuario=models.ForeignKey(User, on_delete=models.CASCADE)
     libro=models.ForeignKey(Libro, on_delete=models.CASCADE)
+    pagleidas = models.IntegerField()
 
     def __str__(self):
         texto = "{1} ({0}) Libro: {2}"
