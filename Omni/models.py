@@ -36,8 +36,8 @@ class Lib_User(models.Model):
     libro=models.ForeignKey(Libro, on_delete=models.CASCADE)
 
     def __str__(self):
-        texto = "{1} ({0})"
-        return texto.format(self.libuser_ID, self.usuario)
+        texto = "{1} ({0}) Libro: {2}"
+        return texto.format(self.libuser_ID, self.usuario, self.libro.titulo)
 
 class Nota(models.Model):
     nota_id=models.IntegerField(primary_key=True)
