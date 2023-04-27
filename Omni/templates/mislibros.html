@@ -8,7 +8,6 @@
 
 
 {% block contenido %}
-
     <div class="container">
 
         <h1 style="color: blue;">Mis Libros</h1>
@@ -32,15 +31,69 @@
                                     <input type="hidden" name="libuser_id" value="{{ libro.libuser_ID }}">
                                     <button type="submit" class="btn btn-success">Lectura</button>
                                 </form>
-
+                                <li>
+                                    {{ libro.titulo }} - {{ libro.autores }} - {{ libro.calificacion_promedio }}
+                                    <span id="calificacion-{{ libro.pk }}">{{ libro.calificacion_promedio }}</span>
+                                    <form method="POST" action="{% url 'calificar_libro' libro.pk %}">
+                                        {% csrf_token %}
+                                        <label for="calificacion{{ libro.pk }}">Calificación:</label>
+                                        <input type="number" id="calificacion{{ libro.pk }}" name="calificacion" min="1" max="5" step="0.1" required>
+                                        <button type="submit">Calificar</button>
+                                    </form>
+                                </li>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
+
+                {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                        $('form').submit(function(event) {
+                            event.preventDefault();
+                            var form = $(this);
+                            $.ajax({
+                                type: form.attr('method'),
+                                url: form.attr('action'),
+                                data: form.serialize(),
+                                success: function(response) {
+                                    $('#calificacion-' + response.libro_pk).text(response.calificacion_promedio);
+                                    form.trigger('reset');
+                                    alert('Libro calificado correctamente.');
+                                },
+                                error: function(response) {
+                                    alert('Error al calificar el libro.');
+                                }
+                            });
+                        });
+                        });
+                        $(document).ready(function() {
+                        $('form').submit(function(event) {
+                            event.preventDefault();
+                            var form = $(this);
+                            console.log('Formulario enviado.');
+                            $.ajax({
+                                type: form.attr('method'),
+                                url: form.attr('action'),
+                                data: form.serialize(),
+                                success: function(response) {
+                                    console.log('Solicitud AJAX exitosa.');
+                                    $('#calificacion-' + response.libro_pk).text(response.calificacion_promedio);
+                                    form.trigger('reset');
+                                    alert('Libro calificado correctamente.');
+                                },
+                            error: function(response) {
+                                console.log('Error en la solicitud AJAX.');
+                                alert('Error al calificar el libro.');
+                            }
+                            });
+                        });
+                    });
+                </script> {% endcomment %}
             </div>
         {% else %}
             <h6 style="color: blue;">¡No tienes libros agregados!</h6>
-        {% endif %} 
+        {% endif %}
 
     </div>
 

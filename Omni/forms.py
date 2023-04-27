@@ -1,5 +1,5 @@
 from django import forms
-from .models import Nota, Recordatorio, Lib_User
+from .models import Nota, Recordatorio, Lib_User,Libro
 
 class NotaForm(forms.ModelForm):
     class Meta:

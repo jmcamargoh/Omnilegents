@@ -24,6 +24,9 @@ class Libro(models.Model):
     num_pages=models.IntegerField()
     fecha_publicacion=models.CharField(max_length=15)
     editorial=models.CharField(max_length=50)
+    num_calificaciones = models.IntegerField(default=0)
+    calificacion_total = models.FloatField(default=0.0)
+    calificacion_promedio = models.FloatField(default=0.0)
 
     def __str__(self):
         texto = "{1} ({0})"
@@ -73,4 +76,6 @@ class Recordatorio(models.Model):
     def __str__(self):
         texto = "{0} ({1})"
         return texto.format(self.tituloReto, self.reto_id)
+
+
     
