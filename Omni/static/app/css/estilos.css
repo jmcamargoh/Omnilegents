@@ -65,3 +65,9 @@ nav > ul > li > a {
     max-width: 1500px;
     min-height: 100vh;
 }
+
+#card {
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+  
