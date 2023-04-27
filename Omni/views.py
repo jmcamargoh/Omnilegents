@@ -119,7 +119,21 @@ def cambiarPagLeidas(request, pk):
       form=cambiarPagLeidasForm(instance=LibUser)
    return render(request, 'cambiarPagLeidas.html', {'form':form})
 
-
+@login_required
+def calificar_libro(request, libro_pk):
+   libro = get_object_or_404(Libro, pk=libro_pk)
+   if request.method == 'POST':
+         calificacion = float(request.POST['calificacion'])
+         if calificacion < 1 or calificacion > 5:
+            messages.error(request, 'La calificación debe estar entre 1 y 5.')
+         else:
+            libro.num_calificaciones += 1
+            libro.calificacion_total += calificacion
+            libro.calificacion_promedio = libro.calificacion_total / libro.num_calificaciones
+            libro.save()
+            messages.success(request, 'Libro calificado correctamente.')
+   return redirect('mis_libros')
+ 
 #---------------------------------------
 # Manejo de las notas en la aplicación
 
