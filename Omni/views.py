@@ -133,6 +133,25 @@ def calificar_libro(request, libro_pk):
             libro.save()
             messages.success(request, 'Libro calificado correctamente.')
    return redirect('mis_libros')
+
+
+def recomendar_libros(request):
+    if request.user.is_authenticated:
+        libros_usuario = Lib_User.objects.filter(usuario=request.user)
+        autores = set()
+        for libro in libros_usuario:
+            autores.update(libro.libro.autores.split(","))
+
+        libros_recomendados = []
+        for autor in autores:
+            libros = Libro.objects.filter(autores__contains=autor).order_by("-num_pages")[:5]
+            libros_recomendados.extend(list(libros))
+
+        context = {"libros_recomendados": libros_recomendados}
+        return render(request, "recomendar_libros.html", context)
+    else:
+        return redirect("login")
+
  
 #---------------------------------------
 # Manejo de las notas en la aplicación

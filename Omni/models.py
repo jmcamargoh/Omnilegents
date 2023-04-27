@@ -36,12 +36,19 @@ class Libro(models.Model):
 class Lib_User(models.Model):
     libuser_ID=models.IntegerField(primary_key=True, unique=True, null=False)
     usuario=models.ForeignKey(User, on_delete=models.CASCADE)
-    libro=models.ForeignKey(Libro, on_delete=models.CASCADE)
+    libro=models.ForeignKey(Libro, on_delete=models.CASCADE, to_field='bookID')
     pagleidas = models.IntegerField()
 
     def __str__(self):
         texto = "{1} ({0}) Libro: {2}"
         return texto.format(self.libuser_ID, self.usuario, self.libro.titulo)
+    
+    def obtener_autores(self):
+        libros = Lib_User.objects.filter(usuario=self.usuario)
+        autores = []
+        for libro in libros:
+            autores.extend(libro.libro.autores.split(","))
+        return list(set(autores))
 
 class Nota(models.Model):
     nota_id=models.IntegerField(primary_key=True)

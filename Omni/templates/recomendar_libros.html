@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+    <link rel="stylesheet" href="css/styles.css">
+
+
+{% block titulo %}
+    <title>Recomendar Libros</title>
+{% endblock %}
+
+{% block contenido %}
+    <div class="container">
+        <h1 style="color: blue;">Recomendaciones de Libros</h1>
+        <p style="color: blue;">Basado en los autores de tus libros</p>
+
+        {% if libros_recomendados %}
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for libro in libros_recomendados %}
+                
+                    <div class="col">
+                        <div class="card" style="background-color: lightskyblue;">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">{{ libro.titulo }}</h5>
+                                <h6 class="card-info">Autor: {{ libro.autores }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="color: red;">Lo siento, no se encontraron libros recomendados.</p>
+        {% endif %}
+    </div>
+{% endblock %}
