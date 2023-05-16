@@ -62,6 +62,16 @@ def import_csv(request):
         return render (request, 'import_csv.html')
     return HttpResponse("Importacion exitosa")
 
+def randomizarGeneros(request):
+   generos = ("Terror", "Comedia", "Novela", "Poesia","Suspenso")
+   libros = Libro.objects.all()
+   longitud = len(libros)
+   for a in range(0,longitud):
+      r = a%5
+      libros[a].genero = generos[r]
+      libros[a].save()
+   return render(request,'randomizarGeneros.html')
+
 #---------------------------------------
 # Página Home
 

@@ -30,6 +30,7 @@ urlpatterns = [
     path('recomendar-libros/', OmniViews.recomendar_libros, name='recomendar_libros'),
     
     path("import_csv/", OmniViews.import_csv),
+    path('randomizarGeneros/',OmniViews.randomizarGeneros, name = "randomizarGeneros"),
     path('', include('accounts.urls')),
     path('agregarlibro/<int:libro_id>/', OmniViews.agregarLibro, name='agregarLibro'),
 
