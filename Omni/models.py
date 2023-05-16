@@ -27,6 +27,7 @@ class Libro(models.Model):
     num_calificaciones = models.IntegerField(default=0)
     calificacion_total = models.FloatField(default=0.0)
     calificacion_promedio = models.FloatField(default=0.0)
+    genero = models.CharField(max_length=20,default="N/A")
 
     def __str__(self):
         texto = "{1} ({0})"
