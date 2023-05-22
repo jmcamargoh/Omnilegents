@@ -2,7 +2,7 @@
 
 {% block titulo %}
 
-    <title>Reseñas de Libros</title>
+    <title>Mis Reseñas</title>
 
 {% endblock %}
 
@@ -27,6 +27,7 @@
                         </a>
                         {% csrf_token %}
                         <a href="{% url 'eliminar_review' pk=review.pk %}" class="btn btn-danger">Eliminar</a>
+                        <a href="{% url 'editar_review' pk=review.pk %}" class="btn btn-warning">Editar</a>
                     </div>
                 </divc>
             </div>

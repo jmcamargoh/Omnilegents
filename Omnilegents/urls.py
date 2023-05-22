@@ -54,4 +54,5 @@ urlpatterns = [
     path('reviews/crear/', OmniViews.crear_review, name="crear_review"),
     path('misreviews/', OmniViews.mis_reviews, name="mis_reviews"),
     path('eliminar_review/<int:pk>', OmniViews.eliminar_review, name="eliminar_review"),
+    path('editar_review/<int:pk>', OmniViews.editar_review, name="editar_review"),
 ]

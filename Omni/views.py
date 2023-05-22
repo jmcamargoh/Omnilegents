@@ -288,3 +288,15 @@ def eliminar_review(request, pk):
    review = get_object_or_404(Review, pk=pk)
    review.delete()
    return redirect('leer_reviews')
+
+@login_required
+def editar_review(request, pk):
+   review = get_object_or_404(Review, pk=pk)
+   if request.method == 'POST':
+      form = ReviewForm(request.POST, instance=review, user=request.user)
+      if form.is_valid():
+         review.save()
+         return redirect('mis_reviews')
+   else:
+      form=ReviewForm(instance=review, user=request.user)
+   return render(request, 'editar_review.html', {'form':form})
