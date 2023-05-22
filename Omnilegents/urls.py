@@ -50,4 +50,6 @@ urlpatterns = [
     path("recordatorio/crear/", OmniViews.crear_recordatorio, name="crear_recordatorio"),
     path('recordatorio/eliminar/<int:pk>/', OmniViews.eliminar_recordatorio, name='eliminar_recordatorio'),
 
+    path('reviews/', OmniViews.leer_reviews, name="leer_reviews"),
+
 ]

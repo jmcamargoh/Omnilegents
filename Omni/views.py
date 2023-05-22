@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
 
-from .models import Libro, Nota, Reto, Recordatorio, Lib_User
+from .models import Libro, Nota, Reto, Recordatorio, Lib_User, Review
 
 from .forms import NotaForm, RecordatorioForm, cambiarPagLeidasForm
 import pandas as pd
@@ -256,3 +256,11 @@ def retos(request):
 @login_required
 def logros(request):
   return render (request, 'logros.html')
+
+#---------------------------------------
+#  Reviews
+
+@login_required
+def leer_reviews(request):
+   reviews = Review.objects.order_by('-fecha_review')
+   return render(request, 'reviews.html', {'reviews':reviews})

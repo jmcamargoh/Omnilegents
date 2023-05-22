@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+    <title>Reseñas de Libros</title>
+
+{% endblock %}
+
+{% load static %}
+
+{% block contenido %}
+
+    <div class="container">
+        <h1 style="color: blue">Reseñas De La Comunidad</h1>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for review in reviews %}
+            <div v-for="review in reviews" class="col">
+                <divc class="card" style="background-color: lightskyblue;">
+                    <div class="card-body">
+                        <h5 style="color:blue">"{{ review.libuser_ID.libro.titulo }}"</h5>
+                        </a>
+                        <h6 style="color:blue">{{ review.contenido_review }}</h6>
+                        </a>
+                        <p style="color:blue"><small>Por {{ review.libuser_ID.usuario.username }} el {{review.fecha_review}}</small></p>
+                        </a>
+                    </div>
+                </divc>
+            </div>
+            {% empty %}
+            <h5 style="color:blue">No hay ningna reseña en la red!</h5>
+            {% endfor %}
+        </div>
+    </div>    
+
+{% endblock %}
