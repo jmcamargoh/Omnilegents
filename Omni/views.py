@@ -62,6 +62,16 @@ def import_csv(request):
         return render (request, 'import_csv.html')
     return HttpResponse("Importacion exitosa")
 
+def randomizarGeneros(request):
+   generos = ("Terror", "Comedia", "Novela", "Poesia","Suspenso")
+   libros = Libro.objects.all()
+   longitud = len(libros)
+   for a in range(0,longitud):
+      r = a%5
+      libros[a].genero = generos[r]
+      libros[a].save()
+   return render(request,'randomizarGeneros.html')
+
 #---------------------------------------
 # Página Home
 
@@ -119,7 +129,40 @@ def cambiarPagLeidas(request, pk):
       form=cambiarPagLeidasForm(instance=LibUser)
    return render(request, 'cambiarPagLeidas.html', {'form':form})
 
+@login_required
+def calificar_libro(request, libro_pk):
+   libro = get_object_or_404(Libro, pk=libro_pk)
+   if request.method == 'POST':
+         calificacion = float(request.POST['calificacion'])
+         if calificacion < 1 or calificacion > 5:
+            messages.error(request, 'La calificación debe estar entre 1 y 5.')
+         else:
+            libro.num_calificaciones += 1
+            libro.calificacion_total += calificacion
+            libro.calificacion_promedio = libro.calificacion_total / libro.num_calificaciones
+            libro.save()
+            messages.success(request, 'Libro calificado correctamente.')
+   return redirect('mis_libros')
 
+
+def recomendar_libros(request):
+    if request.user.is_authenticated:
+        libros_usuario = Lib_User.objects.filter(usuario=request.user)
+        autores = set()
+        for libro in libros_usuario:
+            autores.update(libro.libro.autores.split(","))
+
+        libros_recomendados = []
+        for autor in autores:
+            libros = Libro.objects.filter(autores__contains=autor).order_by("-num_pages")[:5]
+            libros_recomendados.extend(list(libros))
+
+        context = {"libros_recomendados": libros_recomendados}
+        return render(request, "recomendar_libros.html", context)
+    else:
+        return redirect("login")
+
+ 
 #---------------------------------------
 # Manejo de las notas en la aplicación
 
