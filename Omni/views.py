@@ -276,3 +276,15 @@ def crear_review(request):
    else:
       form = ReviewForm(user=request.user)
    return render (request, 'crear_review.html', {'form': form})
+
+@login_required
+def mis_reviews(request):
+   user = request.user
+   reviews = Review.objects.filter(libuser_ID__usuario=user)
+   return render(request, 'mis_reviews.html', {'reviews':reviews})
+
+@login_required
+def eliminar_review(request, pk):
+   review = get_object_or_404(Review, pk=pk)
+   review.delete()
+   return redirect('leer_reviews')
