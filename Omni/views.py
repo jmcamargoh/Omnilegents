@@ -6,7 +6,7 @@ from django.contrib import messages
 
 from .models import Libro, Nota, Reto, Recordatorio, Lib_User, Review
 
-from .forms import NotaForm, RecordatorioForm, cambiarPagLeidasForm
+from .forms import NotaForm, RecordatorioForm, cambiarPagLeidasForm, ReviewForm
 import pandas as pd
 
 
@@ -264,3 +264,15 @@ def logros(request):
 def leer_reviews(request):
    reviews = Review.objects.order_by('-fecha_review')
    return render(request, 'reviews.html', {'reviews':reviews})
+
+@login_required
+def crear_review(request):
+   if request.method == 'POST':
+      form = ReviewForm(request.POST, user=request.user)
+      if form.is_valid():
+         review = form.save(commit=False)
+         review.save()
+         return redirect('leer_reviews')
+   else:
+      form = ReviewForm(user=request.user)
+   return render (request, 'crear_review.html', {'form': form})

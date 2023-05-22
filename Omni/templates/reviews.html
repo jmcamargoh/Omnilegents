@@ -12,6 +12,7 @@
 
     <div class="container">
         <h1 style="color: blue">Reseñas De La Comunidad</h1>
+        <a href="{% url 'crear_review' %}" class="btn btn-success">Crear</a>
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for review in reviews %}
@@ -31,6 +32,7 @@
             <h5 style="color:blue">No hay ningna reseña en la red!</h5>
             {% endfor %}
         </div>
+
     </div>    
 
 {% endblock %}
