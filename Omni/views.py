@@ -4,9 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
 
-from .models import Libro, Nota, Reto, Recordatorio, Lib_User
+from .models import Libro, Nota, Reto, Recordatorio, Lib_User, Review
 
-from .forms import NotaForm, RecordatorioForm, cambiarPagLeidasForm
+from .forms import NotaForm, RecordatorioForm, cambiarPagLeidasForm, ReviewForm
 import pandas as pd
 
 
@@ -256,3 +256,47 @@ def retos(request):
 @login_required
 def logros(request):
   return render (request, 'logros.html')
+
+#---------------------------------------
+#  Reviews
+
+@login_required
+def leer_reviews(request):
+   reviews = Review.objects.order_by('-fecha_review')
+   return render(request, 'reviews.html', {'reviews':reviews})
+
+@login_required
+def crear_review(request):
+   if request.method == 'POST':
+      form = ReviewForm(request.POST, user=request.user)
+      if form.is_valid():
+         review = form.save(commit=False)
+         review.save()
+         return redirect('leer_reviews')
+   else:
+      form = ReviewForm(user=request.user)
+   return render (request, 'crear_review.html', {'form': form})
+
+@login_required
+def mis_reviews(request):
+   user = request.user
+   reviews = Review.objects.filter(libuser_ID__usuario=user)
+   return render(request, 'mis_reviews.html', {'reviews':reviews})
+
+@login_required
+def eliminar_review(request, pk):
+   review = get_object_or_404(Review, pk=pk)
+   review.delete()
+   return redirect('leer_reviews')
+
+@login_required
+def editar_review(request, pk):
+   review = get_object_or_404(Review, pk=pk)
+   if request.method == 'POST':
+      form = ReviewForm(request.POST, instance=review, user=request.user)
+      if form.is_valid():
+         review.save()
+         return redirect('mis_reviews')
+   else:
+      form=ReviewForm(instance=review, user=request.user)
+   return render(request, 'editar_review.html', {'form':form})
