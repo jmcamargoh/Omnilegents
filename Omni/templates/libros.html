@@ -34,6 +34,7 @@
                         <h5 class="card-title fw-bold">{{ libro.titulo }}</h5>
                         </a>
                         <h6 class="card-info">Código ISBN: {{ libro.isbn }}</h6>
+                        <h6 class="card-info">Calificación: {{ libro.calificacion_promedio }}</h6>
 
                         <form method="post" action="{% url 'agregarLibro' libro.bookID %}">
                             {% csrf_token %}
