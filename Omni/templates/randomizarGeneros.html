@@ -1,0 +1,27 @@
+<!-- Hereda desde base lo que tiene que ir en todas las views -->
+
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+    <title>Randomizacion</title>
+
+{% endblock %}
+
+{% load static %}
+
+{% block contenido %}
+
+<h2 style="color: blue;">Randomizacion Exitosa</h2>
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-12 col-xl-1">
+        <div class="card" style="background-color: rgba(141, 181, 255, 0.986);">
+
+            
+            <a href="{% url 'home' %}" class="btn btn-info" style="color: white;">Regresar a Casa</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

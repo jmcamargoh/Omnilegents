@@ -27,6 +27,7 @@ class Libro(models.Model):
     num_calificaciones = models.IntegerField(default=0)
     calificacion_total = models.FloatField(default=0.0)
     calificacion_promedio = models.FloatField(default=0.0)
+    genero = models.CharField(max_length=20,default="N/A")
 
     def __str__(self):
         texto = "{1} ({0})"
@@ -85,4 +86,12 @@ class Recordatorio(models.Model):
         return texto.format(self.tituloReto, self.reto_id)
 
 
-    
+class Review(models.Model):
+    review_id = models.IntegerField(primary_key=True)
+    libuser_ID = models.ForeignKey(Lib_User, on_delete=models.CASCADE)
+    contenido_review = models.TextField()
+    fecha_review = models.DateTimeField(auto_now_add=True)  
+
+    def __str__(self):
+        texto = "{0} ({1})"
+        return texto.format(self.review_id, self.libuser_ID)  

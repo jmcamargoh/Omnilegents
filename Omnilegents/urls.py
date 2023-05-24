@@ -26,10 +26,11 @@ urlpatterns = [
     path("libros/", OmniViews.libros, name="libros"), #Para acceder a esta es el mismo enlace con /libros
     path("mislibros/", OmniViews.mislibros, name='mislibros'),
     path("cambiarPagLeidas/<int:pk>/",OmniViews.cambiarPagLeidas,name="cambiarPagLeidas"),
-    path('calificar_libro/<int:libro_pk>/', OmniViews.calificar_libro, name='calificar_libro'),
+    path('calificar_libro/<int:pk>/', OmniViews.calificar_libro, name='calificar_libro'),
     path('recomendar-libros/', OmniViews.recomendar_libros, name='recomendar_libros'),
     
     path("import_csv/", OmniViews.import_csv),
+    path('randomizarGeneros/',OmniViews.randomizarGeneros, name = "randomizarGeneros"),
     path('', include('accounts.urls')),
     path('agregarlibro/<int:libro_id>/', OmniViews.agregarLibro, name='agregarLibro'),
 
@@ -49,4 +50,9 @@ urlpatterns = [
     path("recordatorio/crear/", OmniViews.crear_recordatorio, name="crear_recordatorio"),
     path('recordatorio/eliminar/<int:pk>/', OmniViews.eliminar_recordatorio, name='eliminar_recordatorio'),
 
+    path('reviews/', OmniViews.leer_reviews, name="leer_reviews"),
+    path('reviews/crear/', OmniViews.crear_review, name="crear_review"),
+    path('misreviews/', OmniViews.mis_reviews, name="mis_reviews"),
+    path('eliminar_review/<int:pk>', OmniViews.eliminar_review, name="eliminar_review"),
+    path('editar_review/<int:pk>', OmniViews.editar_review, name="editar_review"),
 ]
