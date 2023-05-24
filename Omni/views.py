@@ -142,7 +142,7 @@ def calificar_libro(request, libro_pk):
             libro.calificacion_promedio = libro.calificacion_total / libro.num_calificaciones
             libro.save()
             messages.success(request, 'Libro calificado correctamente.')
-   return redirect('mis_libros')
+   return redirect('mislibros')
 
 
 def recomendar_libros(request):
