@@ -7,13 +7,16 @@
 {% endblock %}
 
 {% block contenido %}
+<div>
 
-    <h2 style="color: blue">Editar horas leidas</h2>
-    <form method="post" style="color: blue">
+    <h2 style="color: black">Editar tiempo y paginas leidas de este libro.</h2>
+    <form method="post" style="color: black">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit"  class="btn btn-success">Guardar Cambios</button>
         <a href="{% url 'mislibros' %}" class="btn btn-info">Volver</a>
     </form>
+    
+</div>
 
 {% endblock %}

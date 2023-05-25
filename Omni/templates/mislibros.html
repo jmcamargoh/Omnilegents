@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load mathfilters %}
 
 {% block titulo %}
 
@@ -10,27 +11,27 @@
 {% block contenido %}
     <div class="container">
 
-        <h1 style="color: blue;">Mis Libros</h1>
-        <p style="color: blue;">¡En esta sección encontrarás los libros que estás leyendo o que has leído!</p>
+        <h1 style="color: black;">Mis Libros</h1>
+        <p style="color: black;">¡En esta sección encontrarás los libros que estás leyendo o que has leído!</p>
 
         {% if libros_usuario %}
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row">
                 {% for libro in libros_usuario %}
-                    <div v-for="libro in libros" class="col">
-                        <div class="card" style="background-color: lightskyblue;">
+                    <div v-for="libro in libros" class="col-md-3 col-sm-6">
+                        <div class="card" style="background-color: #ececed; margin-bottom:10px;">
                             <div class="card-body">
                                 <h5 class="card-title fw-bold">{{ libro.libro.titulo }}</h5>
-                                </a>
                                 <h6 class="card-info">Código ISBN: {{ libro.libro.isbn }}</h6>
-                                </a>
                                 
-                                <h6 class="card-info">Paginas leidas: {{ libro.pagleidas }} de {{ libro.libro.num_pages }}</h6>
+                                <h6 class="card-info">Paginas leidas:  {{ libro.pagleidas }} de {{ libro.libro.num_pages }}</h6>
+                                <h6 class="card-info">Porcentaje leido:  {{ libro.pagleidas|div:libro.libro.num_pages|mul:100|floatformat }}%</h6>
                                 
                                 <form method="post" action="{% url 'cambiarPagLeidas' libro.libuser_ID %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="libuser_id" value="{{ libro.libuser_ID }}">
                                     <button type="submit" class="btn btn-success">Lectura</button>
                                 </form>
+                                
                                 <li>
                                     {{ libro.titulo }} - {{ libro.autores }} - {{ libro.calificacion_promedio }}
                                     <span id="calificacion-{{ libro.pk }}">{{ libro.calificacion_promedio }}</span>
@@ -45,7 +46,19 @@
                         </div>
                     </div>
                 {% endfor %}
+            </div>
 
+                
+                <div class="row"style="margin-top:50px">
+                    <h1>Grafica</h1>
+                    
+                </div>
+
+                <div class="row" style="margin-bottom: 50px;">
+                    <img src="../static/GraficasMisLibros/Grafica.png">
+                </div>
+                
+                
                 {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                     <script>
                         $(document).ready(function() {
@@ -90,9 +103,10 @@
                         });
                     });
                 </script> {% endcomment %}
-            </div>
+            
         {% else %}
             <h6 style="color: blue;">¡No tienes libros agregados!</h6>
+
         {% endif %}
 
     </div>
