@@ -8,9 +8,9 @@
 
 {% block contenido %}
 
-    <h2 style="color: blue">{{ rec.hora }}</h2>
-    <p style="color:blue">{{ rec.mensaje }}</p>
-    <p style="color: blue">Meta (mins): {{rec.metaDiaria}}</p>
+    <h2 style="color: black">{{ rec.hora }}</h2>
+    <p style="color:black">{{ rec.mensaje }}</p>
+    <p style="color: black">Meta (mins): {{rec.metaDiaria}}</p>
     <a href="{% url 'eliminar_recordatorio' pk=rec.pk %}" class="btn btn-danger text-white" style="background-color: red;">Eliminar</a>
     <a href="{% url 'recordatorios' %}" class="btn btn-info">Volver</a>
 

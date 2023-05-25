@@ -9,15 +9,15 @@
 
 {% block contenido %}
     <div class="container">
-        <h1 style="color: blue;">Recomendaciones de Libros</h1>
-        <p style="color: blue;">Basado en los autores de tus libros</p>
+        <h1 style="color: black;">Recomendaciones de Libros</h1>
+        <p style="color: black;">Basado en los autores de tus libros</p>
 
         {% if libros_recomendados %}
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 {% for libro in libros_recomendados %}
                 
                     <div class="col">
-                        <div class="card" style="background-color: lightskyblue;">
+                        <div class="card" style="background-color: #ececed;margin-bottom:10px;">
                             <div class="card-body">
                                 <h5 class="card-title fw-bold">{{ libro.titulo }}</h5>
                                 <h6 class="card-info">Autor: {{ libro.autores }}</h6>

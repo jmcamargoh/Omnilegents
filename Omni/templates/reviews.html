@@ -11,20 +11,20 @@
 {% block contenido %}
 
     <div class="container">
-        <h1 style="color: blue">Reseñas De La Comunidad</h1>
-        <a href="{% url 'crear_review' %}" class="btn btn-success">Crear</a>
-        <a href="{% url 'mis_reviews' %}" class="btn btn-info">Mis Reseñas</a>
+        <h1 style="color: black">Reseñas De La Comunidad</h1>
+        <a href="{% url 'crear_review' %}" class="btn btn-success" style = "margin-bottom:10px;">Crear</a>
+        <a href="{% url 'mis_reviews' %}" class="btn btn-info" style="margin-bottom:10px;">Mis Reseñas</a>
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for review in reviews %}
             <div v-for="review in reviews" class="col">
-                <divc class="card" style="background-color: lightskyblue;">
+                <divc class="card" style="background-color: #ececed; margin-bottom:10px;">
                     <div class="card-body">
-                        <h5 style="color:blue">"{{ review.libuser_ID.libro.titulo }}"</h5>
+                        <h5 style="color:black">"{{ review.libuser_ID.libro.titulo }}"</h5>
                         </a>
-                        <h6 style="color:blue">{{ review.contenido_review }}</h6>
+                        <h6 style="color:black">{{ review.contenido_review }}</h6>
                         </a>
-                        <p style="color:blue"><small>Por {{ review.libuser_ID.usuario.username }} el {{review.fecha_review}}</small></p>
+                        <p style="color:black"><small>Por {{ review.libuser_ID.usuario.username }} el {{review.fecha_review}}</small></p>
                         </a>
                     </div>
                 </divc>

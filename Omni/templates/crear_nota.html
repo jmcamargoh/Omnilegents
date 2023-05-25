@@ -8,8 +8,8 @@
 
 {% block contenido %}
 
-    <h2 style="color: blue">Crear Nota</h2>
-    <form method="post" style="color: blue">
+    <h2 style="color: black">Crear Nota</h2>
+    <form method="post" style="color: black">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success">Guardar</button>

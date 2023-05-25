@@ -105,14 +105,44 @@ def agregarLibro(request, libro_id):
 
 #---------------------------------------
 # Sección MisLibros
+import matplotlib.pyplot as plt
 
 @login_required
 def mislibros(request):
-    usuario = request.user
-    libros_usuario = Lib_User.objects.filter(usuario=usuario)
+   usuario = request.user
+   libros_usuario = Lib_User.objects.filter(usuario=usuario)
 
-    context = {'libros_usuario':libros_usuario}
-    return render (request, 'mislibros.html', context)
+   nombreUsuario = None
+   if libros_usuario:
+      nombreUsuario = str(libros_usuario[0].usuario.username)
+   
+   
+
+   librosGrafica = []
+   xAxis = []
+   yAxis = []
+   for a in range(0,len(libros_usuario)):
+      if libros_usuario[a].pagleidas != 0 and libros_usuario[a].tiempoLeido!= 0 :
+         librosGrafica.append(libros_usuario[a])
+         if(len(libros_usuario[a].libro.titulo)>20):
+            xAxis.append(libros_usuario[a].libro.titulo[:20])
+         else: 
+            xAxis.append(libros_usuario[a].libro.titulo)
+         yMoment = libros_usuario[a].pagleidas / libros_usuario[a].tiempoLeido
+         yAxis.append(yMoment)
+   fig,ax = plt.subplots()
+   ax.bar(xAxis,yAxis)
+   ax.set_xlabel('Libros')
+   ax.set_ylabel('Paginas Leidas por minuto')
+   ax.set_title('Rendimiento de lectura')
+   plt.savefig("Omni/static/GraficasMisLibros/Grafica.png")
+
+
+      
+      
+
+   context = {'libros_usuario':libros_usuario}
+   return render (request, 'mislibros.html', context)
 
 @login_required
 def cambiarPagLeidas(request, pk):
