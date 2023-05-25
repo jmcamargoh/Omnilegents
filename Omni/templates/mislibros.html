@@ -2,113 +2,43 @@
 {% load mathfilters %}
 
 {% block titulo %}
-
     <title>Mis Libros</title>
-
 {% endblock %}
-
 
 {% block contenido %}
     <div class="container">
-
         <h1 style="color: black;">Mis Libros</h1>
         <p style="color: black;">¡En esta sección encontrarás los libros que estás leyendo o que has leído!</p>
 
         {% if libros_usuario %}
             <div class="row">
-                {% for libro in libros_usuario %}
-                    <div v-for="libro in libros" class="col-md-3 col-sm-6">
+                {% for libro_usuario in libros_usuario %}
+                    <div class="col-md-3 col-sm-6">
                         <div class="card" style="background-color: #ececed; margin-bottom:10px;">
                             <div class="card-body">
-                                <h5 class="card-title fw-bold">{{ libro.libro.titulo }}</h5>
-                                <h6 class="card-info">Código ISBN: {{ libro.libro.isbn }}</h6>
-                                
-                                <h6 class="card-info">Paginas leidas:  {{ libro.pagleidas }} de {{ libro.libro.num_pages }}</h6>
-                                <h6 class="card-info">Porcentaje leido:  {{ libro.pagleidas|div:libro.libro.num_pages|mul:100|floatformat }}%</h6>
-                                
-                                <form method="post" action="{% url 'cambiarPagLeidas' libro.libuser_ID %}">
+                                <h5 class="card-title fw-bold">{{ libro_usuario.libro.titulo }}</h5>
+                                <h6 class="card-info">Código ISBN: {{ libro_usuario.libro.isbn }}</h6>
+                                <h6 class="card-info">Páginas leídas: {{ libro_usuario.pagleidas }} de {{ libro_usuario.libro.num_pages }}</h6>
+                                <h6 class="card-info">Porcentaje leído: {{ libro_usuario.pagleidas|div:libro_usuario.libro.num_pages|mul:100|floatformat }}%</h6>
+                                <h6 class="card-info">Calificación promedio: {{ libro_usuario.libro.calificacion_promedio|truncatechars:4 }}</h6>
+                                <form method="POST" action="{% url 'cambiarPagLeidas' libro_usuario.libuser_ID %}">
                                     {% csrf_token %}
-                                    <input type="hidden" name="libuser_id" value="{{ libro.libuser_ID }}">
+                                    <input type="hidden" name="libuser_id" value="{{ libro_usuario.libuser_ID }}">
                                     <button type="submit" class="btn btn-success">Lectura</button>
                                 </form>
-                                
-                                <li>
-                                    {{ libro.titulo }} - {{ libro.autores }} - {{ libro.calificacion_promedio }}
-                                    <span id="calificacion-{{ libro.pk }}">{{ libro.calificacion_promedio }}</span>
-                                    <form method="POST" action="{% url 'calificar_libro' libro.pk %}">
-                                        {% csrf_token %}
-                                        <label for="calificacion{{ libro.pk }}">Calificación:</label>
-                                        <input type="number" id="calificacion{{ libro.pk }}" name="calificacion" min="1" max="5" step="0.1" required>
-                                        <button type="submit">Calificar</button>
-                                    </form>
-                                </li>
+                                <form method="POST" action="{% url 'calificar_libro' libro_usuario.libro.pk %}">
+                                    {% csrf_token %}
+                                    <label for="calificacion{{ libro_usuario.libro.pk }}">Calificación:</label>
+                                    <input type="number" id="calificacion{{ libro_usuario.libro.pk }}" name="calificacion" min="1" max="5" step="0.1" required>
+                                    <button type="submit">Calificar</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
-
-                
-                <div class="row"style="margin-top:50px">
-                    <h1>Grafica</h1>
-                    
-                </div>
-
-                <div class="row" style="margin-bottom: 50px;">
-                    <img src="../static/GraficasMisLibros/Grafica.png">
-                </div>
-                
-                
-                {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                    <script>
-                        $(document).ready(function() {
-                        $('form').submit(function(event) {
-                            event.preventDefault();
-                            var form = $(this);
-                            $.ajax({
-                                type: form.attr('method'),
-                                url: form.attr('action'),
-                                data: form.serialize(),
-                                success: function(response) {
-                                    $('#calificacion-' + response.libro_pk).text(response.calificacion_promedio);
-                                    form.trigger('reset');
-                                    alert('Libro calificado correctamente.');
-                                },
-                                error: function(response) {
-                                    alert('Error al calificar el libro.');
-                                }
-                            });
-                        });
-                        });
-                        $(document).ready(function() {
-                        $('form').submit(function(event) {
-                            event.preventDefault();
-                            var form = $(this);
-                            console.log('Formulario enviado.');
-                            $.ajax({
-                                type: form.attr('method'),
-                                url: form.attr('action'),
-                                data: form.serialize(),
-                                success: function(response) {
-                                    console.log('Solicitud AJAX exitosa.');
-                                    $('#calificacion-' + response.libro_pk).text(response.calificacion_promedio);
-                                    form.trigger('reset');
-                                    alert('Libro calificado correctamente.');
-                                },
-                            error: function(response) {
-                                console.log('Error en la solicitud AJAX.');
-                                alert('Error al calificar el libro.');
-                            }
-                            });
-                        });
-                    });
-                </script> {% endcomment %}
-            
         {% else %}
             <h6 style="color: blue;">¡No tienes libros agregados!</h6>
-
         {% endif %}
-
     </div>
-
 {% endblock %}
