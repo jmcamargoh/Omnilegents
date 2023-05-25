@@ -161,36 +161,58 @@ def cambiarPagLeidas(request, pk):
 
 @login_required
 def calificar_libro(request, libro_pk):
-   libro = get_object_or_404(Libro, pk=libro_pk)
-   if request.method == 'POST':
-         calificacion = float(request.POST['calificacion'])
-         if calificacion < 1 or calificacion > 5:
+    libro = get_object_or_404(Libro, pk=libro_pk)
+    if request.method == 'POST':
+        calificacion = float(request.POST['calificacion'])
+        if calificacion < 1 or calificacion > 5:
             messages.error(request, 'La calificación debe estar entre 1 y 5.')
-         else:
+        else:
             libro.num_calificaciones += 1
             libro.calificacion_total += calificacion
             libro.calificacion_promedio = libro.calificacion_total / libro.num_calificaciones
             libro.save()
             messages.success(request, 'Libro calificado correctamente.')
-   return redirect('mislibros')
+
+    # Obtener el promedio de calificaciones actualizado
+    libros_usuario = Lib_User.objects.filter(usuario=request.user)
+    for libro_usuario in libros_usuario:
+        libro_usuario.calificacion_promedio = libro_usuario.libro.calificacion_promedio
+        libro_usuario.save()
+
+    return redirect('mislibros')
+
 
 
 def recomendar_libros(request):
     if request.user.is_authenticated:
         libros_usuario = Lib_User.objects.filter(usuario=request.user)
         autores = set()
+        generos = set()
+        
         for libro in libros_usuario:
             autores.update(libro.libro.autores.split(","))
+            generos.add(libro.libro.genero)
+        
+        libros_recomendados_autor = []
+        libros_recomendados_genero = []
 
-        libros_recomendados = []
         for autor in autores:
-            libros = Libro.objects.filter(autores__contains=autor).order_by("-num_pages")[:5]
-            libros_recomendados.extend(list(libros))
+            libros = Libro.objects.filter(autores__contains=autor).exclude(bookID__in=[libro.libro.bookID for libro in libros_usuario]).order_by("-num_pages")[:5]
+            libros_recomendados_autor.extend(list(libros))
 
+        for genero in generos:
+            libros = Libro.objects.filter(genero=genero).exclude(bookID__in=[libro.libro.bookID for libro in libros_usuario]).order_by("-num_pages")[:5]
+            libros_recomendados_genero.extend(list(libros))
+
+        libros_recomendados = libros_recomendados_autor + libros_recomendados_genero
+        libros_recomendados = list(set(libros_recomendados))  # Eliminar duplicados
+        
         context = {"libros_recomendados": libros_recomendados}
         return render(request, "recomendar_libros.html", context)
     else:
         return redirect("login")
+
+
 
  
 #---------------------------------------
