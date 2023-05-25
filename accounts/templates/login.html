@@ -10,24 +10,24 @@
 {% block contenido %}
 
 <div class="col-md-6 mx-auto d-block">
-    <div class="card mb-3" style="background-color: blue; text-align: center;">
+    <div class="card mb-3" style="background-color: #FAFAFA; text-align: center; margin-top:20px;">
         <div>
             <div class="card-body">
-                <h4 class="card-title" style="color: white">Inicio de Sesión</h4>
-                <h6 style="color: white">Para poder acceder a todas nuestras funcionalidades, primero debes estar registrado!</h6>
+                <h4 class="card-title" style="color: black">Inicio de Sesión</h4>
+                <h6 style="color: black">Para poder acceder a todas nuestras funcionalidades, primero debes estar registrado!</h6>
                 {% if error %}
                     <div class="alert alert-danger mt-3" role="alert">
                         {{ error }}
                     </div>
                 {% endif %}
                 <p class="card-text">
-                    <form method="POST" style="color: white">
+                    <form method="POST" style="color: black">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-success">Iniciar Sesión</button>
                     </form>
                 </p>
-                <h6 style="color: white">¿No tienes una cuenta? Crea una <a href="{% url 'signup' %}" style="color: white;"><u>AHORA</u></a></h6>
+                <h6 style="color: black">¿No tienes una cuenta? Crea una <a href="{% url 'signup' %}" style="color: blue;"><u>AHORA</u></a></h6>
             </div>
         </div>
     </div>
