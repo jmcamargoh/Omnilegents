@@ -14,7 +14,7 @@ class RecordatorioForm(forms.ModelForm):
 class cambiarPagLeidasForm(forms.ModelForm):
     class Meta:
         model = Lib_User
-        fields = ['pagleidas']
+        fields = ['pagleidas', 'tiempoLeido']
 
 class ReviewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

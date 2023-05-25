@@ -31,6 +31,7 @@
                                     <input type="hidden" name="libuser_id" value="{{ libro.libuser_ID }}">
                                     <button type="submit" class="btn btn-success">Lectura</button>
                                 </form>
+                                
                                 <li>
                                     {{ libro.titulo }} - {{ libro.autores }} - {{ libro.calificacion_promedio }}
                                     <span id="calificacion-{{ libro.pk }}">{{ libro.calificacion_promedio }}</span>
